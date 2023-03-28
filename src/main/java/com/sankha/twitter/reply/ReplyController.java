@@ -44,17 +44,4 @@ public class ReplyController {
 		   return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 		  }
 
-	@DeleteMapping(path="/tweet/{reply_id}/reply", produces = "application/json")
-	public ResponseEntity<Object> deleteComment(
-			Authentication authentication,
-			@PathVariable("reply_id")
-			long reply_id
-	) throws Exception
-	{
-		Reply deletedComment = replyService.deleteComment(authentication, reply_id);
-		apiResponse.setData(deletedComment);
-		apiResponse.setMessage("Comment deleted");
-		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
-	}
-
 }

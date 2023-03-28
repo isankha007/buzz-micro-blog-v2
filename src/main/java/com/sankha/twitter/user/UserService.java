@@ -105,11 +105,6 @@ public class UserService {
 	public UserEntity findByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
-
-	public UserEntity getUserById(Authentication authentication,Long userId) {
-		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
-		return userRepo.findById(userId).orElseThrow(()->new RuntimeException("User Not Found"));
-	}
 	
   /*public UserResponseDto createUser(CreateUserRequestDto request) {
 	  var user = modelMapper.map(request, UserEntity.class);
