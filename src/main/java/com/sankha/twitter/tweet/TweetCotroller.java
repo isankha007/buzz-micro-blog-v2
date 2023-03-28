@@ -7,12 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sankha.twitter.response.ApiResponse;
 import com.sankha.twitter.tweet.dto.CreateTweetDto;
@@ -62,7 +57,20 @@ public class TweetCotroller {
 	    apiResponse.setData(userTweets);
 	    
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
-	}	
+	}
+
+
+	@DeleteMapping(path = "/delete/{tweetId}", produces = "application/json")
+	public ResponseEntity<Object> deleteTweet(Authentication authentication, @PathVariable Long tweetId)
+	{
+
+		UserEntity loggedInUser = userService.findByUsername(authentication.getName());
+		tweetService.deleteMyTweets(loggedInUser.getUserId(),tweetId);
+		apiResponse.setMessage("Tweet Deleted!");
+		apiResponse.setData(tweetId);
+
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.ACCEPTED);
+	}
     
 //    @PostMapping("")
 //    public ResponseEntity<TweetResposeDto> createTweet(

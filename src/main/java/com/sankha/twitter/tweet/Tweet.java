@@ -34,8 +34,12 @@ public class Tweet {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweet",cascade = CascadeType.ALL)
 	//@JoinColumn(name="replies")
 	private List<Reply> replies;
-	
-	
+
+
+	@Column(nullable = false)
+	private Boolean isDeleted;
+
+
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name="likes")
 	private List<LikeEntity> likes;

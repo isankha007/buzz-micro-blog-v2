@@ -2,7 +2,9 @@ package com.sankha.twitter.tweet;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
+import com.sankha.twitter.exception.TweetNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -83,6 +85,15 @@ public class TweetService {
 	   List<Tweet> tweets= tweetRepo.findLatestTweetByUser(userId);
 	   return tweets;
    }
+
+	public void deleteMyTweets(long userId,long tweetId){
+		//Tweet tweet= tweetRepo.findById(tweetId).orElseThrow(()->new TweetNotFoundException("Tweet","Tweet id",tweetId));
+		Tweet latestTweetByUserAndTweetId = tweetRepo.findLatestTweetByUserAndTweetId(userId, tweetId)
+				.orElseThrow(()->new TweetNotFoundException("Tweet","Tweet id",tweetId));
+		latestTweetByUserAndTweetId.setIsDeleted(true);
+		tweetRepo.save(latestTweetByUserAndTweetId);
+
+	}
 	
  
 }

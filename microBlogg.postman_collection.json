@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "21366212-5ab1-4710-9afb-23c344294afe",
+		"name": "microBlogg",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24195493"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.K5whmomH9PzlQyxk9n1EDrpLCEui4WLBgBCc3khcQ18",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Sankhadeep2\",\r\n    \"password\": \"SnIper@3213\",\r\n    \"email\": \"sankha1@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Sankhadeep2\",\r\n    \"password\": \"SnIper@3213\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/authenticate",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW5raGFkZWVwMiIsImV4cCI6MTY3ODM3NjgzMCwiaWF0IjoxNjc4MzczMjMwfQ.K9X6vlN466N575qkqtC7Pi8vQp8I4TZlnVeRECQxTX8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"Sankhadeep\",\r\n    \"password\": \"admin123\",\r\n    \"email\": \"sankha@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/user/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"user",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tweet feeds",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW5raGFkZWVwMiIsImV4cCI6MTY3ODM3NjgzMCwiaWF0IjoxNjc4MzczMjMwfQ.K9X6vlN466N575qkqtC7Pi8vQp8I4TZlnVeRECQxTX8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"Sankhadeep\",\r\n    \"password\": \"admin123\",\r\n    \"email\": \"sankha@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/tweet/feed",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"tweet",
+						"feed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tweet by usr",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW5raGFkZWVwMiIsImV4cCI6MTY3ODM3NjgzMCwiaWF0IjoxNjc4MzczMjMwfQ.K9X6vlN466N575qkqtC7Pi8vQp8I4TZlnVeRECQxTX8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"Sankhadeep\",\r\n    \"password\": \"admin123\",\r\n    \"email\": \"sankha@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/tweet/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"tweet",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTweet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW5raGFkZWVwMiIsImV4cCI6MTY3ODM3NjgzMCwiaWF0IjoxNjc4MzczMjMwfQ.K9X6vlN466N575qkqtC7Pi8vQp8I4TZlnVeRECQxTX8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwNDM5MTkxLCJpYXQiOjE2NzA0MzU1OTF9._-pT7zUs84zBr3qpN_T7l9F3qMdbWXo_PWC2kKI5YZQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"Some text\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/tweet/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"tweet",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload media file",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwNDM5MTkxLCJpYXQiOjE2NzA0MzU1OTF9._-pT7zUs84zBr3qpN_T7l9F3qMdbWXo_PWC2kKI5YZQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"Some text\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/tweet/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"tweet",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post tweet comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwOTIyOTA0LCJpYXQiOjE2NzA5MTkzMDR9.Y9US98hfGj_94mT34sqXfH8m4fYcBKvFALjbiH-9EUM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"Some text\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8383/tweets/tweet/2/reply",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"tweet",
+						"2",
+						"reply"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Follower",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwOTE0NTgwLCJpYXQiOjE2NzA5MTA5ODB9.wlnqxpuHL3zmJ-J4A6N4pM64CoqW-3lUarQ-4o2T6uA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8383/tweets/follower/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"follower",
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "un Follow",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwOTE5MDMxLCJpYXQiOjE2NzA5MTU0MzF9.H7SLQoMmsf__qxodgx1R1DBwlOxh93gkq6a5d0JzblI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8383/tweets/unfollow/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"unfollow",
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete own tweet",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYW5raGFkZWVwIiwiZXhwIjoxNjcwOTE5MDMxLCJpYXQiOjE2NzA5MTU0MzF9.H7SLQoMmsf__qxodgx1R1DBwlOxh93gkq6a5d0JzblI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8383/tweets/delete/17",
+					"host": [
+						"localhost"
+					],
+					"port": "8383",
+					"path": [
+						"tweets",
+						"delete",
+						"17"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTYW5raGFkZWVwMyIsImV4cCI6MTY4MDAxMjMwMiwiaWF0IjoxNjgwMDA4NzAyfQ.ryESjuXEnT-yhk816Nw5h-Et6MjKKzVnCZdAezX_zC0",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

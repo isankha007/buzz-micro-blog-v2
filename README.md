@@ -1,5 +1,8 @@
 # buzz-micro-blogging
 
+
+http://localhost:8383/swagger-ui.html#/
+
 following this project 
 https://github.com/tkouleris/Tweety
 
