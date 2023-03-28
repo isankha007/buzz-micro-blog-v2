@@ -38,25 +38,25 @@ public class ReplyService {
         
 		return replyRepo.save(reply);		
 	}
-	/*
-	public Comment deleteComment(Authentication authentication, Long comment_id) throws Exception
+
+	public Reply deleteComment(Authentication authentication, Long comment_id) throws Exception
 	{
-		Comment commentToDelete = R_Comment.findById(comment_id).orElse(null);
+		Reply commentToDelete = replyRepo.findById(comment_id).orElse(null);
 		if(commentToDelete == null)
 		{
 			throw new Exception("Comment not found");
 		}
-		User LoggedInUser = R_User.findByUsername(authentication.getName());
+		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
 
-		if(commentToDelete.getComment_user_id() != LoggedInUser)
+		if(commentToDelete.getReplyAuthor() != LoggedInUser)
 		{
 			throw new Exception("Not authorized to delete this comment");
 		}
-		
-		R_Comment.delete(commentToDelete);
+
+		replyRepo.delete(commentToDelete);
 				
 		return commentToDelete;
-	}*/
+	}
 	public List<Reply> showTweetComments(long tweet_id)
 	{
 		Tweet commented_tweet = tweetRepo.findById(tweet_id).orElse(null);
