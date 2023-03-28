@@ -1,0 +1,24 @@
+server:
+  port: 8383
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+        
+        
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver       # org.h2.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tweets     #jdbc:h2:mem:testdb
+    username: sankha
+    password: SnIper@321
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+    hibernate:
+      ddl-auto: update #create
+    
+
+#spring.servlet.multipart.max-file-size=1MB
+#spring.servlet.multipart.max-request-size=1MB
