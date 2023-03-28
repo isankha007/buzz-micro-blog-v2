@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sankha.twitter.response.ApiResponse;
 import com.sankha.twitter.user.dto.TweetersList;
@@ -30,6 +26,16 @@ public class UserController {
 	    apiResponse.setMessage("User Lists!");
 	    apiResponse.setData(userList);
 		
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/user/{user_id}", produces = "application/json")
+	public ResponseEntity<Object> getUserById(Authentication authentication, @PathVariable Long user_id )
+	{
+		UserEntity user = userService.getUserById(authentication,user_id);
+		apiResponse.setMessage("User Detail!");
+		apiResponse.setData(user);
+
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
     
