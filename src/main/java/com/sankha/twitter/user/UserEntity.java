@@ -2,6 +2,7 @@ package com.sankha.twitter.user;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import javax.persistence.Entity;
@@ -15,12 +16,11 @@ import javax.validation.constraints.Pattern.Flag;
 
 import com.sankha.twitter.follower.Follower;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity{
@@ -36,6 +36,16 @@ public class UserEntity{
 	
     @OneToMany(mappedBy = "follower")
 	private List<Follower> followers;
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof UserEntity that)) return false;
+		return Objects.equals(userId, that.userId) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(followers, that.followers);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId, username, password, email, followers);
+	}
 }

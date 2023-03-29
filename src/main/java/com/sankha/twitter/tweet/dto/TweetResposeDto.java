@@ -19,6 +19,8 @@ public class TweetResposeDto {
 	private Timestamp updated;
 	
 	private UserEntity tweetAuthor;
+
+	private long retweetCount;
 	
 	private List<Reply> replies;
 	

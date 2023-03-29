@@ -32,7 +32,7 @@ public class TweetCotroller {
 	public ResponseEntity<Object> getFeed(Authentication authentication)
 	{			
         UserEntity LoggedInUser = userService.findByUsername(authentication.getName());
-        List<Tweet> userFeed = tweetService.getFeed(LoggedInUser);
+        List<TweetResposeDto> userFeed = tweetService.getFeed(LoggedInUser);
 	    apiResponse.setMessage("User Feed!");
 	    apiResponse.setData(userFeed);	    
 	   
@@ -45,6 +45,15 @@ public class TweetCotroller {
 		Tweet savedTweet = tweetService.createTweet(authentication,newTweet);	    
 	    apiResponse.setMessage("Tweet created!");
 	    apiResponse.setData(savedTweet);
+
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
+	}
+
+	@PostMapping(path = "/tweet/retweet/{tweetId}", produces = "application/json")
+	public ResponseEntity<Object> reTweet(Authentication authentication, @PathVariable Long tweetId) throws Exception {
+		Tweet savedTweet = tweetService.reTweet(authentication,tweetId);
+		apiResponse.setMessage("Tweet Retweeted!");
+		apiResponse.setData(savedTweet);
 
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
 	}

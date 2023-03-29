@@ -2,6 +2,7 @@ package com.sankha.twitter.tweet;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -27,9 +28,16 @@ public class Tweet {
 	private String text;
 	private Timestamp created;
 	private Timestamp updated;
-	
+
 	@ManyToOne
 	private UserEntity tweetAuthor;
+
+	private Boolean isRetweet;
+
+	@OneToMany
+	@Column(name = "tweet-retweet-author-id")
+	private Set<UserEntity> reTweetAuthors;
+
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweet",cascade = CascadeType.ALL)
 	//@JoinColumn(name="replies")
@@ -40,8 +48,8 @@ public class Tweet {
 	private Boolean isDeleted;
 
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name="likes")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweetEntity",cascade = CascadeType.ALL)
+	//@JoinColumn(name="likes")
 	private List<LikeEntity> likes;
 	
 	

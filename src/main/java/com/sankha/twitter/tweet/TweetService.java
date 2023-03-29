@@ -3,6 +3,7 @@ package com.sankha.twitter.tweet;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.sankha.twitter.exception.TweetNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -29,11 +30,12 @@ public class TweetService {
 	  @Autowired
 	  TimestampUtil timestampUtil;
 	  
-	  public List<Tweet> getFeed(UserEntity loggedInUser)
+	  public List<TweetResposeDto> getFeed(UserEntity loggedInUser)
 		{
 			Tweet latestUserTweet = null;
 			List<Tweet> userTweets = tweetRepo.findLatestTweetByUser(loggedInUser.getUserId());
 			if(userTweets.size() > 0) latestUserTweet = userTweets.get(0);
+
 
 			List<Tweet> followTweets = tweetRepo.findTweetsThatUserFollows(loggedInUser);
 			if(latestUserTweet != null && latestUserTweet.getUpdated().after(timestampUtil.oneMinuteBackTimestamp()))
@@ -41,7 +43,14 @@ public class TweetService {
 				followTweets.add(0,latestUserTweet);
 			}
 			followTweets.addAll(showMyTweets(loggedInUser.getUserId()));
-			return followTweets;
+
+			List<TweetResposeDto> finalFeed = followTweets.stream().map(tweet -> {
+				int retweetCount=tweet.getReTweetAuthors().size();
+				TweetResposeDto map = modelMapper.map(tweet, TweetResposeDto.class);
+				map.setRetweetCount(retweetCount);
+				return 	map;
+			}).collect(Collectors.toList());
+			return finalFeed;
 		}
 	  
 	  public Tweet createTweet(Authentication authentication, Tweet newTweet)
@@ -56,9 +65,19 @@ public class TweetService {
 	       // newTweet.setTweet_updated_at(currentTimestamp );        
 	        return tweetRepo.save(newTweet);
 		}
-	
-	  
-	  
+
+
+	public Tweet reTweet(Authentication authentication, Long tweetId) throws Exception {
+		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
+		Tweet newTweet = getTweet(tweetId);
+		if(newTweet.getReTweetAuthors().contains(LoggedInUser)){
+			newTweet.getReTweetAuthors().remove(LoggedInUser);
+		}else{
+			newTweet.getReTweetAuthors().add(LoggedInUser);
+		}
+
+		return tweetRepo.save(newTweet);
+	}
 	  
 	public TweetResposeDto createTweet(CreateTweetDto tweet) {
 		 var tweetTemp = modelMapper.map(tweet, Tweet.class);

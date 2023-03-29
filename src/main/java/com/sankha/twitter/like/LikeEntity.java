@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sankha.twitter.tweet.Tweet;
 import com.sankha.twitter.user.UserEntity;
 
@@ -31,5 +32,6 @@ public class LikeEntity {
 	private UserEntity likeAuthor;
 	
 	@ManyToOne(targetEntity = Tweet.class)
+	@JsonIgnore
 	private Tweet tweetEntity;
 }
