@@ -67,7 +67,7 @@ public class TweetService {
 		}
 
 
-	public Tweet reTweet(Authentication authentication, Long tweetId) throws Exception {
+	public TweetResposeDto reTweet(Authentication authentication, Long tweetId) throws Exception {
 		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
 		Tweet newTweet = getTweet(tweetId);
 		if(newTweet.getReTweetAuthors().contains(LoggedInUser)){
@@ -76,7 +76,7 @@ public class TweetService {
 			newTweet.getReTweetAuthors().add(LoggedInUser);
 		}
 
-		return tweetRepo.save(newTweet);
+		return modelMapper.map(tweetRepo.save(newTweet),TweetResposeDto.class);
 	}
 	  
 	public TweetResposeDto createTweet(CreateTweetDto tweet) {

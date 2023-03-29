@@ -11,7 +11,7 @@ import lombok.Data;
 public class UserResponseDto {
 	private Long userId;
 	private String username;
-	private String password;
+//	private String password;
 	private String email;
 	public boolean is_followed_by_user;
 	

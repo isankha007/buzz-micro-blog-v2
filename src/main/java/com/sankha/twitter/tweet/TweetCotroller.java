@@ -51,11 +51,11 @@ public class TweetCotroller {
 
 	@PostMapping(path = "/tweet/retweet/{tweetId}", produces = "application/json")
 	public ResponseEntity<Object> reTweet(Authentication authentication, @PathVariable Long tweetId) throws Exception {
-		Tweet savedTweet = tweetService.reTweet(authentication,tweetId);
+		TweetResposeDto savedTweet = tweetService.reTweet(authentication,tweetId);
 		apiResponse.setMessage("Tweet Retweeted!");
 		apiResponse.setData(savedTweet);
 
-		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")

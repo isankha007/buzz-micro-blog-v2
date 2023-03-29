@@ -9,6 +9,7 @@ import com.sankha.twitter.like.LikeEntity;
 import com.sankha.twitter.reply.Reply;
 import com.sankha.twitter.user.UserEntity;
 
+import com.sankha.twitter.user.dto.UserResponseDto;
 import lombok.Data;
 
 @Data
@@ -18,7 +19,7 @@ public class TweetResposeDto {
 	private Timestamp created;
 	private Timestamp updated;
 	
-	private UserEntity tweetAuthor;
+	private UserResponseDto tweetAuthor;
 
 	private long retweetCount;
 	
