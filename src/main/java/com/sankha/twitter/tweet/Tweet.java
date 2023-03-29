@@ -49,9 +49,13 @@ public class Tweet {
 	private Boolean isDeleted=false;
 
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweetEntity",cascade = CascadeType.ALL)
-	//@JoinColumn(name="likes")
-	private List<LikeEntity> likes;
+//	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweetEntity",cascade = CascadeType.ALL)
+//	//@JoinColumn(name="likes")
+//	private List<LikeEntity> likes;
+
+	@ManyToMany
+	@Column(name = "tweet-likedby-id")
+	private Set<UserEntity> tweetLikedByUser=new HashSet<>();
 	
 	
 	@OneToMany(fetch = FetchType.LAZY)

@@ -17,11 +17,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 	@Query( value="SELECT * "
 			+ "FROM tweet "
 			+ "WHERE is_deleted = 0 AND "
-			+ "tweet_author_user_id IN"
+			+ "tweet_author_user_id IN "
 			+ "("
 			+ "SELECT following FROM follower WHERE follower = ?1"
 			+ ") "
-
 			+ "ORDER BY updated DESC",
 			nativeQuery = true
 	)

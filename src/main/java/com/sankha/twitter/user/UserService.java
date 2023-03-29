@@ -88,7 +88,7 @@ public class UserService {
 			tweeter.setUsername(user.getUsername());
 			//tweeter.username = user.getUsername();
 			//tweeter.email = user.getEmail();
-			tweeter.setEmail(user.getEmail());
+			//tweeter.setEmail(user.getEmail());
 			Follower f = followerRepo.findByFolloweeAndFollower(user,LoggedInUser).orElse(null);
 			if(f == null)
 			{
@@ -106,9 +106,12 @@ public class UserService {
 		return userRepo.findByUsername(username);
 	}
 
-	public UserEntity getUserById(Authentication authentication,Long userId) {
+	public UserResponseDto getUserById(Authentication authentication,Long userId) {
 		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
-		return userRepo.findById(userId).orElseThrow(()->new RuntimeException("User Not Found"));
+//		if(LoggedInUser.getUserId().longValue()==userId){
+//			return modelMapper.map(LoggedInUser,UserResponseDto.class);
+//		}
+		return modelMapper.map(userRepo.findById(userId).orElseThrow(()->new RuntimeException("User Not Found")),UserResponseDto.class);
 	}
 	
   /*public UserResponseDto createUser(CreateUserRequestDto request) {

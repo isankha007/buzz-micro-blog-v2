@@ -30,7 +30,7 @@ public class LikeEntity {
 	
 	@ManyToOne
 	private UserEntity likeAuthor;
-	
+	//this entity not used
 	@ManyToOne(targetEntity = Tweet.class)
 	@JsonIgnore
 	private Tweet tweetEntity;

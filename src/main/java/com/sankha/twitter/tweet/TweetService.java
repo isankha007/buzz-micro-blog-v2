@@ -1,6 +1,7 @@
 package com.sankha.twitter.tweet;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class TweetService {
 			if(userTweets.size() > 0) latestUserTweet = userTweets.get(0);
 
 
-			List<Tweet> followTweets = tweetRepo.findTweetsThatUserFollows(loggedInUser);
+			List<Tweet> followTweets = new ArrayList<>(); //tweetRepo.findTweetsThatUserFollows(loggedInUser);
 			if(latestUserTweet != null && latestUserTweet.getUpdated().after(timestampUtil.oneMinuteBackTimestamp()))
 			{
 				followTweets.add(0,latestUserTweet);
@@ -47,10 +48,15 @@ public class TweetService {
 
 			List<TweetResposeDto> finalFeed = followTweets.stream().map(tweet -> {
 				int retweetCount=tweet.getReTweetAuthors().size();
-				Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+				int likeCount=tweet.getTweetLikedByUser().size();
+				//doing abstraction for sending minimal data
+				//Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+				//Set<Long> collectIdsFOrLikes = tweet.getTweetLikedByUser().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
 				TweetResposeDto mapDto = modelMapper.map(tweet, TweetResposeDto.class);
 				mapDto.setRetweetCount(retweetCount);
-				mapDto.getReTweetAuthorsIds().addAll(collectIds);
+				mapDto.setLikeCount(likeCount);
+				//mapDto.getReTweetAuthorsIds().addAll(collectIds);
+				//mapDto.getLikedByUser().addAll(collectIdsFOrLikes);
 				return 	mapDto;
 			}).collect(Collectors.toList());
 			return finalFeed;
@@ -65,7 +71,8 @@ public class TweetService {
 	        newTweet.setCreated(currentTimestamp);
 	        newTweet.setUpdated(currentTimestamp);
 	       // newTweet.setTweet_created_at(currentTimestamp );
-	       // newTweet.setTweet_updated_at(currentTimestamp );        
+	       // newTweet.setTweet_updated_at(currentTimestamp );
+
 	        return modelMapper.map(tweetRepo.save(newTweet),TweetResposeDto.class); //tweetRepo.save(newTweet);
 		}
 
@@ -77,6 +84,18 @@ public class TweetService {
 			newTweet.getReTweetAuthors().remove(LoggedInUser);
 		}else{
 			newTweet.getReTweetAuthors().add(LoggedInUser);
+		}
+
+		return modelMapper.map(tweetRepo.save(newTweet),TweetResposeDto.class);
+	}
+
+	public TweetResposeDto toggleLike(Authentication authentication, Long tweetId) throws Exception {
+		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
+		Tweet newTweet = getTweet(tweetId);
+		if(newTweet.getTweetLikedByUser().contains(LoggedInUser)){
+			newTweet.getTweetLikedByUser().remove(LoggedInUser);
+		}else{
+			newTweet.getTweetLikedByUser().add(LoggedInUser);
 		}
 
 		return modelMapper.map(tweetRepo.save(newTweet),TweetResposeDto.class);

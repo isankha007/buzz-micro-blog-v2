@@ -9,7 +9,7 @@ spring:
         
   datasource:
     driver-class-name: com.mysql.jdbc.Driver       # org.h2.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tweets     #jdbc:h2:mem:testdb
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tweetsdbv1     #jdbc:h2:mem:testdb
     username: sankha
     password: SnIper@321
   jpa:

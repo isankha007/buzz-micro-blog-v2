@@ -57,6 +57,15 @@ public class TweetCotroller {
 
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
+
+	@PostMapping(path = "/tweet/likes/{tweetId}", produces = "application/json")
+	public ResponseEntity<Object> toggleLikes(Authentication authentication, @PathVariable Long tweetId) throws Exception {
+		TweetResposeDto savedTweet = tweetService.toggleLike(authentication,tweetId);
+		apiResponse.setMessage("Tweet Liked!");
+		apiResponse.setData(savedTweet);
+
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
 	
 	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")
 	public ResponseEntity<Object> showTweetsByUser(@PathVariable("user_id") long user_id)

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.sankha.twitter.like.LikeEntity;
 import com.sankha.twitter.reply.Reply;
+import com.sankha.twitter.reply.dto.ReplyRespnseDto;
 import com.sankha.twitter.user.UserEntity;
 
 import com.sankha.twitter.user.dto.UserResponseDto;
@@ -26,7 +27,10 @@ public class TweetResposeDto {
 
 	private Set<Long> reTweetAuthorsIds=new HashSet<>();
 	
-	private List<Reply> replies;
-	
-	private List<LikeEntity> likes;
+	private List<ReplyRespnseDto> replies;
+
+
+	private long likeCount;
+
+	private Set<UserEntity> tweetLikedByUser=new HashSet<>();
 }

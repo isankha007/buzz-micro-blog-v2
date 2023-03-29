@@ -2,6 +2,8 @@ package com.sankha.twitter.reply;
 
 import java.util.List;
 
+import com.sankha.twitter.reply.dto.ReplyRespnseDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,11 @@ public class ReplyService {
 	private ReplyRepository replyRepo;	
 	@Autowired
 	private TimestampUtil timestampUtil;
+
+	@Autowired
+	private ModelMapper modelMapper;
 	
-	public Reply userMakesNewCommentAtTweet(Authentication authentication, Long tweet_id, Reply reply ) throws Exception
+	public ReplyRespnseDto userMakesNewCommentAtTweet(Authentication authentication, Long tweet_id, Reply reply ) throws Exception
 	{
 		Tweet CommentedTweet = tweetRepo.findById(tweet_id).orElse(null);
 		if(CommentedTweet == null)
@@ -36,7 +41,7 @@ public class ReplyService {
         reply.setCreated(timestampUtil.currentTimestamp());
         reply.setUpdated(timestampUtil.currentTimestamp());
         
-		return replyRepo.save(reply);		
+		return modelMapper.map(replyRepo.save(reply),ReplyRespnseDto.class);
 	}
 
 	public Reply deleteComment(Authentication authentication, Long comment_id) throws Exception

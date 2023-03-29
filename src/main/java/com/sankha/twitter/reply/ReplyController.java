@@ -1,5 +1,6 @@
 package com.sankha.twitter.reply;
 
+import com.sankha.twitter.reply.dto.ReplyRespnseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ public class ReplyController {
 			Authentication authentication,
 			@PathVariable("tweet_id") long tweet_id 
 	) throws Exception{
-		Reply savedComment = replyService.userMakesNewCommentAtTweet(authentication, tweet_id, reply);		
+		ReplyRespnseDto savedComment = replyService.userMakesNewCommentAtTweet(authentication, tweet_id, reply);
+
 		apiResponse.setData(savedComment);
 		apiResponse.setMessage("Comment crated");
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);

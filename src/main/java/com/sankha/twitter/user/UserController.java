@@ -2,6 +2,7 @@ package com.sankha.twitter.user;
 
 import java.net.URI;
 
+import com.sankha.twitter.user.dto.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class UserController {
 	@GetMapping(path = "/user/{user_id}", produces = "application/json")
 	public ResponseEntity<Object> getUserById(Authentication authentication, @PathVariable Long user_id )
 	{
-		UserEntity user = userService.getUserById(authentication,user_id);
+		UserResponseDto user = userService.getUserById(authentication,user_id);
 		apiResponse.setMessage("User Detail!");
 		apiResponse.setData(user);
 
