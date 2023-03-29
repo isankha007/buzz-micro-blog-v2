@@ -1,6 +1,7 @@
 package com.sankha.twitter.tweet;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,9 +35,9 @@ public class Tweet {
 
 	private Boolean isRetweet;
 
-	@OneToMany
+	@ManyToMany
 	@Column(name = "tweet-retweet-author-id")
-	private Set<UserEntity> reTweetAuthors;
+	private Set<UserEntity> reTweetAuthors=new HashSet<>();
 
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweet",cascade = CascadeType.ALL)
@@ -45,7 +46,7 @@ public class Tweet {
 
 
 	@Column(nullable = false)
-	private Boolean isDeleted;
+	private Boolean isDeleted=false;
 
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "tweetEntity",cascade = CascadeType.ALL)

@@ -1,8 +1,9 @@
 package com.sankha.twitter.tweet.dto;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 
 import com.sankha.twitter.like.LikeEntity;
@@ -22,6 +23,8 @@ public class TweetResposeDto {
 	private UserResponseDto tweetAuthor;
 
 	private long retweetCount;
+
+	private Set<Long> reTweetAuthorsIds=new HashSet<>();
 	
 	private List<Reply> replies;
 	

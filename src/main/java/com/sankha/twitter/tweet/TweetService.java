@@ -3,6 +3,7 @@ package com.sankha.twitter.tweet;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.sankha.twitter.exception.TweetNotFoundException;
@@ -46,14 +47,16 @@ public class TweetService {
 
 			List<TweetResposeDto> finalFeed = followTweets.stream().map(tweet -> {
 				int retweetCount=tweet.getReTweetAuthors().size();
-				TweetResposeDto map = modelMapper.map(tweet, TweetResposeDto.class);
-				map.setRetweetCount(retweetCount);
-				return 	map;
+				Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+				TweetResposeDto mapDto = modelMapper.map(tweet, TweetResposeDto.class);
+				mapDto.setRetweetCount(retweetCount);
+				mapDto.getReTweetAuthorsIds().addAll(collectIds);
+				return 	mapDto;
 			}).collect(Collectors.toList());
 			return finalFeed;
 		}
 	  
-	  public Tweet createTweet(Authentication authentication, Tweet newTweet)
+	  public TweetResposeDto createTweet(Authentication authentication, Tweet newTweet)
 		{		
 	        UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
 	        newTweet.setTweetAuthor(LoggedInUser);
@@ -63,7 +66,7 @@ public class TweetService {
 	        newTweet.setUpdated(currentTimestamp);
 	       // newTweet.setTweet_created_at(currentTimestamp );
 	       // newTweet.setTweet_updated_at(currentTimestamp );        
-	        return tweetRepo.save(newTweet);
+	        return modelMapper.map(tweetRepo.save(newTweet),TweetResposeDto.class); //tweetRepo.save(newTweet);
 		}
 
 

@@ -41,8 +41,8 @@ public class TweetCotroller {
 	
 	@PostMapping(path = "/tweet/create", produces = "application/json")
 	public ResponseEntity<Object> createTweet(Authentication authentication, @RequestBody Tweet newTweet)
-	{			
-		Tweet savedTweet = tweetService.createTweet(authentication,newTweet);	    
+	{
+		TweetResposeDto savedTweet = tweetService.createTweet(authentication,newTweet);
 	    apiResponse.setMessage("Tweet created!");
 	    apiResponse.setData(savedTweet);
 
