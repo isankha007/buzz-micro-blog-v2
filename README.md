@@ -4,7 +4,7 @@
 http://localhost:8383/swagger-ui.html#/
 
 following this project 
-https://github.com/tkouleris/Tweety
+https://github.com/tkouleris/Tweety as base ...and adding more complex funtionalities 
 
 Create Tweet
 POST : req  //send JWT bearer token in header
