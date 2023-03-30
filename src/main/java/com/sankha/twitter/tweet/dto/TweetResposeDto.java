@@ -21,7 +21,7 @@ public class TweetResposeDto {
 	private Timestamp created;
 	private Timestamp updated;
 	
-	private UserResponseDto tweetAuthor;
+	private Long tweetAuthorId;
 
 	private long retweetCount;
 

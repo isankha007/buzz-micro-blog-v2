@@ -39,27 +39,28 @@ public class TweetService {
 			if(userTweets.size() > 0) latestUserTweet = userTweets.get(0);
 
 
-			List<Tweet> followTweets = new ArrayList<>(); //tweetRepo.findTweetsThatUserFollows(loggedInUser);
+			List<Tweet> followTweets = tweetRepo.findTweetsThatUserFollows(loggedInUser);
 			if(latestUserTweet != null && latestUserTweet.getUpdated().after(timestampUtil.oneMinuteBackTimestamp()))
 			{
 				followTweets.add(0,latestUserTweet);
 			}
-			followTweets.addAll(showMyTweets(loggedInUser.getUserId()));
+			followTweets.addAll(tweetRepo.findLatestTweetByUser(loggedInUser.getUserId()));
 
-			List<TweetResposeDto> finalFeed = followTweets.stream().map(tweet -> {
+			/*List<TweetResposeDto> finalFeed = followTweets.stream().map(tweet -> {
 				int retweetCount=tweet.getReTweetAuthors().size();
 				int likeCount=tweet.getTweetLikedByUser().size();
 				//doing abstraction for sending minimal data
 				Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
 				Set<Long> collectIdsFOrLikes = tweet.getTweetLikedByUser().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
 				TweetResposeDto mapDto = modelMapper.map(tweet, TweetResposeDto.class);
+				mapDto.setTweetAuthorId(tweet.getTweetAuthor().getUserId());
 				mapDto.setRetweetCount(retweetCount);
 				mapDto.setLikeCount(likeCount);
 				mapDto.getReTweetAuthorsIds().addAll(collectIds);
 				mapDto.getTweetLikedByUserIds().addAll(collectIdsFOrLikes);
 				return 	mapDto;
-			}).collect(Collectors.toList());
-			return finalFeed;
+			}).collect(Collectors.toList());*/
+			return converToDto(followTweets);
 		}
 	  
 	  public TweetResposeDto createTweet(Authentication authentication, Tweet newTweet)
@@ -79,7 +80,7 @@ public class TweetService {
 
 	public TweetResposeDto reTweet(Authentication authentication, Long tweetId) throws Exception {
 		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
-		Tweet newTweet = getTweet(tweetId);
+		Tweet newTweet = tweetRepo.findById(tweetId).orElse(null);
 		if(newTweet.getReTweetAuthors().contains(LoggedInUser)){
 			newTweet.getReTweetAuthors().remove(LoggedInUser);
 		}else{
@@ -91,7 +92,7 @@ public class TweetService {
 
 	public TweetResposeDto toggleLike(Authentication authentication, Long tweetId) throws Exception {
 		UserEntity LoggedInUser = userRepo.findByUsername(authentication.getName());
-		Tweet newTweet = getTweet(tweetId);
+		Tweet newTweet = tweetRepo.findById(tweetId).orElse(null);
 		if(newTweet.getTweetLikedByUser().contains(LoggedInUser)){
 			newTweet.getTweetLikedByUser().remove(LoggedInUser);
 		}else{
@@ -114,17 +115,35 @@ public class TweetService {
 	
 	
 	
-   public Tweet getTweet(Long id) throws Exception {
+   public TweetResposeDto getTweet(Long id) throws Exception {
 	   Tweet tweet= tweetRepo.findById(id).orElse(null);
 	   if(tweet==null) {
 		   throw new Exception("Tweet not found");
 	   }
-	   return tweet;
+	   return modelMapper.map(tweet,TweetResposeDto.class);
    }
    
-   public List<Tweet> showMyTweets(long userId){
+   public List<TweetResposeDto> showMyTweets(long userId){
 	   List<Tweet> tweets= tweetRepo.findLatestTweetByUser(userId);
-	   return tweets;
+	   return converToDto(tweets);
+   }
+
+   private List<TweetResposeDto> converToDto( List<Tweet> tweets){
+	   List<TweetResposeDto> finalFeed = tweets.stream().map(tweet -> {
+		   int retweetCount=tweet.getReTweetAuthors().size();
+		   int likeCount=tweet.getTweetLikedByUser().size();
+		   //doing abstraction for sending minimal data
+		   Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+		   Set<Long> collectIdsFOrLikes = tweet.getTweetLikedByUser().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+		   TweetResposeDto mapDto = modelMapper.map(tweet, TweetResposeDto.class);
+		   mapDto.setTweetAuthorId(tweet.getTweetAuthor().getUserId());
+		   mapDto.setRetweetCount(retweetCount);
+		   mapDto.setLikeCount(likeCount);
+		   mapDto.getReTweetAuthorsIds().addAll(collectIds);
+		   mapDto.getTweetLikedByUserIds().addAll(collectIdsFOrLikes);
+		   return 	mapDto;
+	   }).collect(Collectors.toList());
+	   return finalFeed;
    }
 
 	public void deleteMyTweets(long userId,long tweetId){

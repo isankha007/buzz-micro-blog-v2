@@ -70,7 +70,7 @@ public class TweetCotroller {
 	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")
 	public ResponseEntity<Object> showTweetsByUser(@PathVariable("user_id") long user_id)
 	{			
-		List<Tweet> userTweets = tweetService.showMyTweets(user_id);    
+		List<TweetResposeDto> userTweets = tweetService.showMyTweets(user_id);
 	    apiResponse.setMessage("Tweets by user");
 	    apiResponse.setData(userTweets);
 	    

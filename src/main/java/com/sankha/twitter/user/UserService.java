@@ -1,6 +1,7 @@
 package com.sankha.twitter.user;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,7 +112,12 @@ public class UserService {
 //		if(LoggedInUser.getUserId().longValue()==userId){
 //			return modelMapper.map(LoggedInUser,UserResponseDto.class);
 //		}
-		return modelMapper.map(userRepo.findById(userId).orElseThrow(()->new RuntimeException("User Not Found")),UserResponseDto.class);
+		UserEntity userFound = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User Not Found"));
+		UserResponseDto user = modelMapper.map(userFound, UserResponseDto.class);
+		user.getFollowersIds().addAll(userFound.getFollowers().stream().map(f->f.getUserId()).collect(Collectors.toSet()));
+		user.getFollowingIds().addAll(userFound.getFollowing().stream().map(f->f.getUserId()).collect(Collectors.toSet()));
+
+		return user;//modelMapper.map(userRepo.findById(userId).orElseThrow(()->new RuntimeException("User Not Found")),UserResponseDto.class);
 	}
 	
   /*public UserResponseDto createUser(CreateUserRequestDto request) {

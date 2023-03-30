@@ -21,9 +21,9 @@ public class UserResponseDto {
 	//private String email;
 	public boolean is_followed_by_user;
 
-	private List<FollowerResponseDto> followers;
+	private Set<Long> followersIds=new HashSet<>();
 
-	private List<FollowerResponseDto> following;
+	private Set<Long> followingIds=new HashSet<>();
 	//private Set<FollowerResponseDto> followers=new HashSet<>();
 
 	//private Set<FollowerResponseDto> following=new HashSet<>();
