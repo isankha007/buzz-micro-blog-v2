@@ -50,13 +50,13 @@ public class TweetService {
 				int retweetCount=tweet.getReTweetAuthors().size();
 				int likeCount=tweet.getTweetLikedByUser().size();
 				//doing abstraction for sending minimal data
-				//Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
-				//Set<Long> collectIdsFOrLikes = tweet.getTweetLikedByUser().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+				Set<Long> collectIds = tweet.getReTweetAuthors().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
+				Set<Long> collectIdsFOrLikes = tweet.getTweetLikedByUser().stream().map(a -> a.getUserId()).collect(Collectors.toSet());
 				TweetResposeDto mapDto = modelMapper.map(tweet, TweetResposeDto.class);
 				mapDto.setRetweetCount(retweetCount);
 				mapDto.setLikeCount(likeCount);
-				//mapDto.getReTweetAuthorsIds().addAll(collectIds);
-				//mapDto.getLikedByUser().addAll(collectIdsFOrLikes);
+				mapDto.getReTweetAuthorsIds().addAll(collectIds);
+				mapDto.getTweetLikedByUserIds().addAll(collectIdsFOrLikes);
 				return 	mapDto;
 			}).collect(Collectors.toList());
 			return finalFeed;

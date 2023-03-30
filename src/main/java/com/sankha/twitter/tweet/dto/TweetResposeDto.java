@@ -32,5 +32,5 @@ public class TweetResposeDto {
 
 	private long likeCount;
 
-	private Set<UserResponseDto> tweetLikedByUser=new HashSet<>();
+	private Set<Long> tweetLikedByUserIds=new HashSet<>();
 }
